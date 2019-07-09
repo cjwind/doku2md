@@ -17,6 +17,18 @@ function doku2md($str)
 {
     $lines = explode("\n", $str);
 
+    foreach ($lines as &$line) {
+        $line = convertHeader($line);
+
+        $line = convertUnorderedList($line);
+        $line = convertOrderedList($line);
+    }
+
+    return implode("\n", $lines);
+}
+
+function convertHeader($line)
+{
     $patternAndReplacements = [
         '/====== (.*) ======/' => '# ${1}',
         '/===== (.*) =====/' => '## ${1}',
@@ -25,15 +37,10 @@ function doku2md($str)
         '/== (.*) ==/' => '##### ${1}',
     ];
 
-    foreach ($lines as &$line) {
-        foreach ($patternAndReplacements as $pattern => $replacement) {
-            $line = preg_replace($pattern, $replacement, $line);
-        }
-
-        $line = convertUnorderedList($line);
-        $line = convertOrderedList($line);
+    foreach ($patternAndReplacements as $pattern => $replacement) {
+        $line = preg_replace($pattern, $replacement, $line);
     }
 
-    return implode("\n", $lines);
+    return $line;
 }
 
