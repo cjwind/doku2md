@@ -1,6 +1,8 @@
 <?php
 function doku2md($str)
 {
+    $lines = explode("\n", $str);
+
     $patternAndReplacements = [
         '/====== (.*) ======/' => '# ${1}',
         '/===== (.*) =====/' => '## ${1}',
@@ -9,10 +11,12 @@ function doku2md($str)
         '/== (.*) ==/' => '##### ${1}',
     ];
 
-    foreach ($patternAndReplacements as $pattern => $replacement) {
-        $str = preg_replace($pattern, $replacement, $str);
+    foreach ($lines as &$line) {
+        foreach ($patternAndReplacements as $pattern => $replacement) {
+            $line = preg_replace($pattern, $replacement, $line);
+        }
     }
 
-    return $str;
+    return implode("\n", $lines);
 }
 
