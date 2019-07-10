@@ -67,3 +67,17 @@ function convertCodeBlock($line)
     return $line;
 }
 
+if ($argc >= 3) {
+    $inputFile = $argv[1];
+    $outputFile = $argv[2];
+
+    $fp = fopen($inputFile, 'r');
+    $content = fread($fp, filesize($inputFile));
+    fclose($fp);
+
+    $fp = fopen($outputFile, 'w');
+    fwrite($fp, doku2md($content));
+    fclose($fp);
+} else {
+    echo 'php ' . $argv[0] . " <input file> <output file>\n";
+}
