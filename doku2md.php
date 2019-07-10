@@ -9,11 +9,24 @@ function doku2md($str)
         $line = convertMonospaced($line);
         $line = convertCodeBlock($line);
 
-        $line = convertUnorderedList($line);
-        $line = convertOrderedList($line);
+        if (isUnorderedList($line)) {
+            $line = convertUnorderedList($line);
+        }
+
+        if (isOrderedList($line)) {
+            $line = convertOrderedList($line);
+        }
     }
 
     return implode("\n", $lines);
+}
+
+function isUnorderedList($line) {
+    return (preg_match('/^  ( *)*/', $line) > 0);
+}
+
+function isOrderedList($line) {
+    return (preg_match('/^  ( -)*/', $line) > 0);
 }
 
 function convertUnorderedList($line): string
