@@ -19,6 +19,7 @@ function doku2md($str)
 
     foreach ($lines as &$line) {
         $line = convertHeader($line);
+        $line = convertItalic($line);
 
         $line = convertUnorderedList($line);
         $line = convertOrderedList($line);
@@ -42,5 +43,10 @@ function convertHeader($line)
     }
 
     return $line;
+}
+
+function convertItalic($line)
+{
+    return preg_replace('/\/\/(.*)\/\//', '*${1}*', $line);
 }
 
