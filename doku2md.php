@@ -64,6 +64,8 @@ function convertCodeBlock($line)
 {
     $line = preg_replace('/<code( *)(.*)>/', '```${2}', $line);
     $line = str_replace('</code>', '```', $line);
+    $line = preg_replace('/<sxh( *)(.*)>/', '```${2}', $line);
+    $line = str_replace('</sxh>', '```', $line);
     return $line;
 }
 
