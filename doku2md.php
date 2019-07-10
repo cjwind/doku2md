@@ -1,18 +1,4 @@
 <?php
-function convertUnorderedList($line): string
-{
-    $line = preg_replace('/  \*( *)(.*)/', '* ${2}', $line);
-    $spaceCount = strpos($line, '*');
-    return str_repeat(' ', $spaceCount) . $line;
-}
-
-function convertOrderedList($line): string
-{
-    $line = preg_replace('/  -( *)(.*)/', '1. ${2}', $line);
-    $spaceCount = strpos($line, '1. ');
-    return str_repeat(' ', $spaceCount) . $line;
-}
-
 function doku2md($str)
 {
     $lines = explode("\n", $str);
@@ -27,6 +13,20 @@ function doku2md($str)
     }
 
     return implode("\n", $lines);
+}
+
+function convertUnorderedList($line): string
+{
+    $line = preg_replace('/  \*( *)(.*)/', '* ${2}', $line);
+    $spaceCount = strpos($line, '*');
+    return str_repeat(' ', $spaceCount) . $line;
+}
+
+function convertOrderedList($line): string
+{
+    $line = preg_replace('/  -( *)(.*)/', '1. ${2}', $line);
+    $spaceCount = strpos($line, '1. ');
+    return str_repeat(' ', $spaceCount) . $line;
 }
 
 function convertHeader($line)
