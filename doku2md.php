@@ -21,11 +21,13 @@ function doku2md($str)
     return implode("\n", $lines);
 }
 
-function isUnorderedList($line) {
+function isUnorderedList($line)
+{
     return (preg_match('/^  ( *)*/', $line) > 0);
 }
 
-function isOrderedList($line) {
+function isOrderedList($line)
+{
     return (preg_match('/^  ( -)*/', $line) > 0);
 }
 
@@ -82,27 +84,29 @@ function convertCodeBlock($line)
     return $line;
 }
 
-if ($argc >= 3) {
-    $inputFile = $argv[1];
-    $outputFile = $argv[2];
 
-    if (!file_exists($inputFile)) {
-        echo $inputFile . " not found!\n";
-        exit;
-    }
-
-    if (!is_file($inputFile) || !is_readable($inputFile)) {
-        echo $inputFile . " is not a readable file.\n";
-        exit;
-    }
-
-    $fp = fopen($inputFile, 'r');
-    $content = fread($fp, filesize($inputFile));
-    fclose($fp);
-
-    $fp = fopen($outputFile, 'w');
-    fwrite($fp, doku2md($content));
-    fclose($fp);
-} else {
+if ($argc < 3) {
     echo 'php ' . $argv[0] . " <input file> <output file>\n";
+    exit;
 }
+
+$inputFile = $argv[1];
+$outputFile = $argv[2];
+
+if (!file_exists($inputFile)) {
+    echo $inputFile . " not found!\n";
+    exit;
+}
+
+if (!is_file($inputFile) || !is_readable($inputFile)) {
+    echo $inputFile . " is not a readable file.\n";
+    exit;
+}
+
+$fp = fopen($inputFile, 'r');
+$content = fread($fp, filesize($inputFile));
+fclose($fp);
+
+$fp = fopen($outputFile, 'w');
+fwrite($fp, doku2md($content));
+fclose($fp);
