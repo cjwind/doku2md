@@ -20,6 +20,7 @@ function doku2md($str)
     foreach ($lines as &$line) {
         $line = convertHeader($line);
         $line = convertItalic($line);
+        $line = convertCodeBlock($line);
 
         $line = convertUnorderedList($line);
         $line = convertOrderedList($line);
@@ -48,5 +49,12 @@ function convertHeader($line)
 function convertItalic($line)
 {
     return preg_replace('/\/\/(.*)\/\//', '*${1}*', $line);
+}
+
+function convertCodeBlock($line)
+{
+    $line = preg_replace('/<code( *)(.*)>/', '```${2}', $line);
+    $line = str_replace('</code>', '```', $line);
+    return $line;
 }
 
