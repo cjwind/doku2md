@@ -6,6 +6,7 @@ function doku2md($str)
     foreach ($lines as &$line) {
         $line = convertHeader($line);
         $line = convertItalic($line);
+        $line = convertMonospaced($line);
         $line = convertCodeBlock($line);
 
         $line = convertUnorderedList($line);
@@ -49,6 +50,14 @@ function convertHeader($line)
 function convertItalic($line)
 {
     return preg_replace('/\/\/(.*)\/\//', '*${1}*', $line);
+}
+
+function convertMonospaced($line)
+{
+    $line = str_replace('\'\'%%', '`', $line);
+    $line = str_replace('%%\'\'', '`', $line);
+    $line = str_replace('\'\'', '`', $line);
+    return $line;
 }
 
 function convertCodeBlock($line)
