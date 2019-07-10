@@ -86,6 +86,16 @@ if ($argc >= 3) {
     $inputFile = $argv[1];
     $outputFile = $argv[2];
 
+    if (!file_exists($inputFile)) {
+        echo $inputFile . " not found!\n";
+        exit;
+    }
+
+    if (!is_file($inputFile) || !is_readable($inputFile)) {
+        echo $inputFile . " is not a readable file.\n";
+        exit;
+    }
+
     $fp = fopen($inputFile, 'r');
     $content = fread($fp, filesize($inputFile));
     fclose($fp);
