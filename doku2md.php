@@ -8,6 +8,7 @@ function doku2md($str)
         $line = convertItalic($line);
         $line = convertMonospaced($line);
         $line = convertCodeBlock($line);
+        $line = convertLink($line);
 
         if (isUnorderedList($line)) {
             $line = convertUnorderedList($line);
@@ -84,6 +85,11 @@ function convertCodeBlock($line)
     return $line;
 }
 
+function convertLink($line)
+{
+    // [^...] means exclude these characters
+    return preg_replace('/\[\[([^\|\]]*)\|([^\]]*)\]\]/', '[${2}](${1})', $line);
+}
 
 if ($argc < 3) {
     echo 'php ' . $argv[0] . " <input file> <output file>\n";
