@@ -65,7 +65,9 @@ function convertHeader($line)
 
 function convertItalic($line)
 {
-    return preg_replace('/\/\/(.*)\/\//', '*${1}*', $line);
+    $line = preg_replace('/(http(s*):)\/\//', '__${1}_placeholder__', $line);
+    $line = preg_replace('/\/\/(.*)\/\//', '*${1}*', $line);
+    return preg_replace('/__(http(s*):)_placeholder__/', '${1}//', $line);
 }
 
 function convertMonospaced($line)
