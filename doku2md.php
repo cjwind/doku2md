@@ -9,6 +9,7 @@ function doku2md($str)
         $line = convertMonospaced($line);
         $line = convertCodeBlock($line);
         $line = convertLink($line);
+        $line = convertImage($line);
 
         if (isUnorderedList($line)) {
             $line = convertUnorderedList($line);
@@ -91,6 +92,11 @@ function convertLink($line)
 {
     // [^...] means exclude these characters
     return preg_replace('/\[\[([^\|\]]*)\|([^\]]*)\]\]/', '[${2}](${1})', $line);
+}
+
+function convertImage($line)
+{
+    return preg_replace('/{{([^}\|]*)(\|*)}}/', '![](${1})', $line);
 }
 
 if ($argc < 3) {
