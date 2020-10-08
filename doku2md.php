@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 function doku2md($str)
 {
