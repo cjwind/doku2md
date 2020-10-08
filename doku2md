@@ -101,7 +101,7 @@ function convertImage($line)
 }
 
 if ($argc < 3) {
-    echo 'php ' . $argv[0] . " <input file> <output file>\n";
+    echo $argv[0] . " <input file> <output file>\n";
     exit;
 }
 
